@@ -1,16 +1,16 @@
 ##Vivid
 
-A simple and elegant markup language that compiles to HTML (and soon to XML and JSON). Vivid is clear markup that looks like an outline, just like something written with a permanent marker ;)
+A simple and elegant markup language that compiles to HTML & XML (and soon JSON). Vivid is clear markup that looks like an outline, just like something written with a permanent marker ;)
 
-###How to use it
+###How to use the converter
 
-- Vivid files can be created in any text editor of your choice.
+- Vivid files can be created in any text editor of your choice, but at this stage should be encoded in Unicode, preferably UTF-8.
 - At the moment you need Python 2+ installed to make use of the script.
-- Simply download 'htmlconverter.py' to the directory you want to use it in.
-- Open a command-line and enter 'python htmlconverter.py [filename of your vivid file] [filename of the html file you want to output]'
+- Simply download 'xconverter.py' and the 'markdown' directory to the directory you want to use it in.
+- Open a command-line and enter 'python xconverter.py [filename of your vivid file] [filename of the html file you want to output]'
 - That's it!
 
-###Syntax - HTML
+###Syntax - XML & HTML
 
 ####Starting out, tags, whitespace and nesting tags
 
@@ -78,9 +78,9 @@ converts to:
 &lt;/p&gt;
 </pre>
 
-####Properties (eg id, class, type)
+####Attributes (eg id, class, type)
 
-Assigning properties (such as id or class) is easy; on a new line after a tag, just add an extra indent with the syntax property:value as follows:
+Assigning attributes (such as id or class) is easy; on a new line after a tag, just add an extra indent with the syntax attribute:value as follows:
 
 <pre>
 div
@@ -96,9 +96,9 @@ which will turn into:
 &lt;/div&gt;
 </pre>
 
-####New tags
+####Tags you can use
 
-If you're particularly adventurous you can of course make up random tags:
+You can use whichever tags you like as long as they don't start with '#' or contain ':'
 
 <pre>
 hello
@@ -123,7 +123,40 @@ ie
 &lt;/hello&gt;
 </pre>
 
-Even though I'm not sure why you'd want to! This does mean that new tags in the HTML arsenal will be supported.
+####Markdown
+
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a> is supported (courtesy of The Python Markdown Project, see copyright/licence details below), starting and ending with '#markdown#':
+
+<pre>
+div
+	#markdown#
+	Here is some **Markdown** for your viewing pleasure:
+	* A list perhaps?
+	* I think that sounds grand!
+	*Spectacular*, if I do say so myself!
+	#markdown#
+</pre>
+
+converts to:
+
+<pre>
+<div>
+	<p>Here is some <strong>Markdown</strong> for your viewing pleasure:</p>
+	<ul>
+	<li>
+	<p>A list perhaps?</p>
+	</li>
+	<li>
+	<p>I think that sounds grand!</p>
+	</li>
+	</ul>
+	<p><em>Spectacular</em>, if I do say so myself!</p>
+</div>
+</pre>
+
+Indentation not as nice but I'm working on it!
+
+Markdown project and syntax available at <a href="http://daringfireball.net/projects/markdown/">Daring Fireball</a>
 
 ####Putting it all together: a complex example
 
@@ -237,3 +270,37 @@ converts to:
 </pre>
 
 Have fun!
+
+###Credits & Licence information
+
+####Markdown module courtesy of The Python Markdown Project:
+
+Copyright 2007, 2008 The Python Markdown Project (v. 1.7 and later)  
+Copyright 2004, 2005, 2006 Yuri Takhteyev (v. 0.2-1.6b)  
+Copyright 2004 Manfred Stienstra (the original version)  
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    
+*   Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+*   Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+*   Neither the name of the <organization> nor the
+    names of its contributors may be used to endorse or promote products
+    derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE PYTHON MARKDOWN PROJECT ''AS IS'' AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL ANY CONTRIBUTORS TO THE PYTHON MARKDOWN PROJECT
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.

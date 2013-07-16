@@ -29,6 +29,12 @@ html
 				This is another multi line block
 				that I have created
 				##
+			#markdown#
+			Here is some **Markdown** for your viewing pleasure:
+			* A list perhaps?
+			* I think that sounds grand!
+			*Spectacular*
+			#markdown#
 		div
 			id:tester
 			h2

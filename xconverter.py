@@ -1,6 +1,14 @@
 #! python
 # -*- coding: utf-8 -*-
 
+#Import relevant libraries including Markdown
+import codecs
+import sys
+import os
+markdown_directory = os.path.join(os.path.dirname(__file__), 'markdown')
+sys.path.append(markdown_directory)
+import markdown
+
 def stripped(str):
 	if tab_spaced:
 		return str.lstrip('\t').rstrip('\n\r')
@@ -33,9 +41,6 @@ def current_ws():
 	if tab_spaced:
 		return len(line) - len(line.lstrip('\t\n\r'))
 
-import codecs
-import sys
-
 #initialise variables
 html_to_write = []
 unclosed_tags = []
@@ -48,6 +53,8 @@ whitespacing = 0
 tab_spaced = False
 last_type_tag = False
 multi_line_text = False
+is_markdown = False
+markdown_array = []
 
 #open the file
 with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
@@ -80,6 +87,19 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 				write_indented(stripped_line + "<br />",0,html_to_write)
 			continue
 		
+		#deal with unclosed markdown
+		if is_markdown:
+			#deal with a line that closes here, then join markdown, format and send to html array
+			if stripped_line.lower().endswith('#markdown#'):
+				markdown_array.append(stripped_line[:-10])
+				markdown_to_write = markdown.markdown('\n\r'.join(markdown_array))
+				for line in markdown_to_write.split('\n'):
+					write_indented(line,0,html_to_write)
+				is_markdown = False
+			else:
+				markdown_array.append(stripped_line)
+			continue
+		
 		#deal with text ie things starting with '#'
 		if stripped_line.startswith('#'):
 			#if the current tag has less whitespace than the last, close all tags up to this one
@@ -94,6 +114,17 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 				if len(stripped(line)) > 2:
 					write_indented(stripped_line[2:] + "<br />",0,html_to_write)
 				multi_line_text = True
+			#deal with start of markdown (first '#markdown')
+			elif stripped_line.lower().startswith('#markdown#'):
+				#deal with when it starts and ends on the same line
+				if stripped_line.lower().endswith('#markdown#') and len(stripped(line)) > 10:
+					write_indented(markdown.markdown(stripped_line[10:-10]),0,html_to_write)
+					continue
+				#if it just starts with '#markdown#', add to markdown array and skip to next line
+				else:
+					markdown_array = [stripped_line[10:]]
+					is_markdown = True
+					continue
 			#deal with single line text
 			else:
 				write_indented(stripped_line[1:],0,html_to_write)
