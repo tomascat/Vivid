@@ -27,16 +27,16 @@ div
 will automatically nest the tags and convert to:
 
 <pre>
-<div>
-	<div>
-		<p>
-		</p>
-	</div>
-	<div>
-		<p>
-		</p>
-	</div>
-</div>
+&lt;div&gt;
+	&lt;div&gt;
+		&lt;p&gt;
+		&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div&gt;
+		&lt;p&gt;
+		&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
 </pre>
 
 much as you'd expect it to.
@@ -65,17 +65,17 @@ p
 converts to:
 
 <pre>
-<p>
+&lt;p&gt;
 	Based on ideal line length 50-75 characters.
-</p>
-<p>
-	As you can see... blah blah blah<br />
+&lt;/p&gt;
+&lt;p&gt;
+	As you can see... blah blah blah&lt;br /&gt;
 	this is a multi-line block
-</p>
-<p>
-	This is another multi line block<br />
+&lt;/p&gt;
+&lt;p&gt;
+	This is another multi line block&lt;br /&gt;
 	that I have created
-</p>
+&lt;/p&gt;
 </pre>
 
 ####Properties (eg id, class, type)
@@ -92,8 +92,8 @@ div
 which will turn into:
 
 <pre>
-<div id="kafka" class="blocktext" data-category="3">
-</div>
+&lt;div id="kafka" class="blocktext" data-category="3"&gt;
+&lt;/div&gt;
 </pre>
 
 ####New tags
@@ -111,16 +111,16 @@ hello
 ie
 
 <pre>
-<hello>
-	<these>
-		<are>
-		</are>
-		<some>
-		</some>
-	</these>
-	<tags>
-	</tags>
-</hello>
+&lt;hello&gt;
+	&lt;these&gt;
+		&lt;are&gt;
+		&lt;/are&gt;
+		&lt;some&gt;
+		&lt;/some&gt;
+	&lt;/these&gt;
+	&lt;tags&gt;
+	&lt;/tags&gt;
+&lt;/hello&gt;
 </pre>
 
 Even though I'm not sure why you'd want to! This does mean that new tags in the HTML arsenal will be supported.
@@ -184,56 +184,56 @@ html
 converts to:
 
 <pre>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		</meta>
-		<title>
+&lt;html lang="en"&gt;
+	&lt;head&gt;
+		&lt;meta charset="utf-8"&gt;
+		&lt;/meta&gt;
+		&lt;title&gt;
 			Ideal line lengths by font
-		</title>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
-		</script>
-		<script src="linelength.js">
-		</script>
-		<link rel="stylesheet" href="linelength.css">
-		</link>
-	</head>
-	<body>
-		<div id="heading">
-			<h1>
+		&lt;/title&gt;
+		&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"&gt;
+		&lt;/script&gt;
+		&lt;script src="linelength.js"&gt;
+		&lt;/script&gt;
+		&lt;link rel="stylesheet" href="linelength.css"&gt;
+		&lt;/link&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div id="heading"&gt;
+			&lt;h1&gt;
 				Ideal Line Lengths by Font
-			</h1>
-		</div>
-		<div id="intro">
-			<p>
+			&lt;/h1&gt;
+		&lt;/div&gt;
+		&lt;div id="intro"&gt;
+			&lt;p&gt;
 				Based on ideal line length 50-75 characters.
-			</p>
-			<p>
-				As you can see... blah blah blah<br />
+			&lt;/p&gt;
+			&lt;p&gt;
+				As you can see... blah blah blah&lt;br /&gt;
 				this is a multi-line block
-			</p>
-			<p>
-				This is another multi line block<br />
+			&lt;/p&gt;
+			&lt;p&gt;
+				This is another multi line block&lt;br /&gt;
 				that I have created
-			</p>
-		</div>
-		<div id="tester" class="kafka">
-			<h2>
+			&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;div id="tester" class="kafka"&gt;
+			&lt;h2&gt;
 				Test it out here:
-			</h2>
-			<input type="range" id="charsperline" max="75" min="50" step="1" value="62">
-			</input>
-			<ul class="fiddle">
-				<li>
+			&lt;/h2&gt;
+			&lt;input type="range" id="charsperline" max="75" min="50" step="1" value="62"&gt;
+			&lt;/input&gt;
+			&lt;ul class="fiddle"&gt;
+				&lt;li&gt;
 					An item
-				</li>
-				<li>
+				&lt;/li&gt;
+				&lt;li&gt;
 					Another item
-				</li>
-			</ul>
-		</div>
-	</body>
-</html>
+				&lt;/li&gt;
+			&lt;/ul&gt;
+		&lt;/div&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
 </pre>
 
 Have fun!
