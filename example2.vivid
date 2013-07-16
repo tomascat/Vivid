@@ -1,0 +1,25 @@
+html
+  lang:en
+  head
+    meta
+      charset:utf-8
+    title
+      #Ideal line lengths by font
+    script
+      src://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js
+    script
+      src:linelength.js
+    link
+      rel:stylesheet
+      href:linelength.css
+  body
+    div
+      id:heading
+      h1
+        #Ideal Line Lengths by Font
+      p
+        #c.f. 
+        a
+          #Google Fonts, 
+          href:http://google.com/fonts
+        #Such as these ones

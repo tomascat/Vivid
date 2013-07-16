@@ -1,0 +1,49 @@
+html
+	lang:en
+	head
+		meta
+			charset:utf-8
+		title
+			#Ideal line lengths by font
+		script
+			src://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js
+		script
+			src:linelength.js
+		link
+			rel:stylesheet
+			href:linelength.css
+	body
+		div
+			id:heading
+			h1
+				#Ideal Line Lengths by Font
+		div
+			id:intro
+			p
+				#Based on ideal line length 50-75 characters.
+			p
+				##As you can see... blah blah blah
+				this is a multi-line block##
+			p
+				##
+				This is another multi line block
+				that I have created
+				##
+		div
+			id:tester
+			h2
+				#Test it out here:
+			input
+				type:range
+				id:charsperline
+				max:75
+				min:50
+				step:1
+				value:62
+			class:kafka
+			ul
+				class:fiddle
+				li
+					#An item
+				li
+					#Another item
