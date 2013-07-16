@@ -130,9 +130,9 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 			last_type_tag = True
 			
 		# For debugging purposes:
-		a = ''.join(html_to_write)
-		b = ','.join(unclosed_tags)
-		print str(last_type_tag) + "," + str(currentws) + "," + stripped_line + "," + str(previousws) + "\n" + a + "\n" + b + "\n\n"
+		# a = ''.join(html_to_write)
+		# b = ','.join(unclosed_tags)
+		# print str(last_type_tag) + "," + str(currentws) + "," + stripped_line + "," + str(previousws) + "\n" + a + "\n" + b + "\n\n"
 		
 		previousws = currentws
 	
