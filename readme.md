@@ -96,6 +96,23 @@ which will turn into:
 &lt;/div&gt;
 </pre>
 
+You can also use attributes on multiple lines by using 'attribute:', indenting the values you want to use and putting a semicolon at the end, like so:
+
+<pre>
+div
+	id:
+		kafka
+		blocktext
+		menu;
+</pre>
+
+which turns into:
+
+<pre>
+&lt;div id="kafka blocktext menu"&gt;
+&lt;/div&gt;
+</pre>
+
 ####Tags you can use
 
 You can use whichever tags you like as long as they don't start with '#' or contain ':'

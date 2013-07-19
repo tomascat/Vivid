@@ -48,7 +48,10 @@ html
 				value:62
 			class:kafka
 			ul
-				class:fiddle
+				class:
+					fiddle
+					kafka
+					buttons;
 				li
 					#An item
 				li

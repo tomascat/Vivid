@@ -53,6 +53,7 @@ whitespacing = 0
 tab_spaced = False
 last_type_tag = False
 multi_line_text = False
+multi_line_property = False
 is_markdown = False
 markdown_array = []
 
@@ -71,6 +72,8 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 		
 		#strip out whitespace at start and end
 		stripped_line = stripped(line)
+		
+		#deal with multiline things:
 		
 		#deal with unclosed multiline text
 		if multi_line_text:
@@ -98,6 +101,17 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 				is_markdown = False
 			else:
 				markdown_array.append(stripped_line)
+			continue
+		
+		#deal with multiline properties
+		if multi_line_property:
+			tagstart = html_to_write[last_tag_index()].strip()[:-2]
+			propertyvalue = stripped_line.strip()
+			if stripped_line.endswith(';'):
+				html_to_write[last_tag_index()] = indented(tagstart + propertyvalue[:-1] + "\">",1)
+				multi_line_property = False
+			else:
+				html_to_write[last_tag_index()] = indented(tagstart + propertyvalue + " \">",1)
 			continue
 		
 		#deal with text ie things starting with '#'
@@ -131,24 +145,31 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 			#skip the rest of the cycle.
 			continue
 		
-		#deal with everything else
+		#deal with single line tag#text
+		
+		#deal with everything else:
 		
 		#deal with properties eg class:20
 		if ":" in stripped_line:
 			#if the current tag has less whitespace than the last, close all tags up to this one
 			close_tags()
-			#break the property up and insert it into the last tag
 			tagstart = html_to_write[last_tag_index()].strip()[:-1]
-			propertysplit = stripped_line.strip().split(":")
-			property = propertysplit[0].strip()
-			propertyvalue = propertysplit[1].lstrip() + ':'.join(propertysplit[2:])
-			html_to_write[last_tag_index()] = indented(tagstart + " " + property + "=\"" + propertyvalue + "\">",1)
-			# write_indented(tagstart + " " + property + "=\"" + propertyvalue + "\">",1,html_to_write)
-			#set the last type to not be a tag
-			last_type_tag = False
-			#reduce whitespace by one as it's a property
-			currentws -= whitespacing
-			
+			#deal with multiline properties- add 'property ="' to the last unclosed tag
+			if stripped_line.endswith(':'):
+				multi_line_property = True
+				property = stripped_line.strip()[:-1]
+				html_to_write[last_tag_index()] = indented(tagstart + " " + property + "=\" >",1)
+				continue
+			else:
+				#break the property up and insert it into the last tag
+				propertysplit = stripped_line.strip().split(":")
+				property = propertysplit[0].strip()
+				propertyvalue = propertysplit[1].lstrip() + ':'.join(propertysplit[2:])
+				html_to_write[last_tag_index()] = indented(tagstart + " " + property + "=\"" + propertyvalue + "\">",1)
+				#set the last type to not be a tag
+				last_type_tag = False
+				#reduce whitespace by one as it's a property
+				currentws -= whitespacing
 		
 		#deal with tags eg div
 		else:
