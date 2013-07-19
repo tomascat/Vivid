@@ -46,13 +46,13 @@ html
 				min:50
 				step:1
 				value:62
+			p#Yay!
 			class:kafka
 			ul
 				class:
 					fiddle
 					kafka
 					buttons;
-				li
-					#An item
-				li
-					#Another item
+				li#An item
+					class:firstitem
+				li#Another item

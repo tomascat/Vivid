@@ -78,6 +78,64 @@ converts to:
 &lt;/p&gt;
 </pre>
 
+If you have a single line of text and want to put it on the same line as the tag it belong to you can:
+
+<pre>
+table
+	tr
+		th#First Name
+		th#Surname
+		th#Age
+	tr
+		td#Adam
+		td#Adamsen
+		td#40
+	tr
+		td#Mavis
+		td#Withers
+		td#92
+</pre>
+
+will turn into:
+
+<pre>
+&lt;table&gt;
+	&lt;tr&gt;
+		&lt;th&gt;
+			First Name
+		&lt;/th&gt;
+		&lt;th&gt;
+			Surname
+		&lt;/th&gt;
+		&lt;th&gt;
+			Age
+		&lt;/th&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;
+			Adam
+		&lt;/td&gt;
+		&lt;td&gt;
+			Adamsen
+		&lt;/td&gt;
+		&lt;td&gt;
+			40
+		&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;
+			Mavis
+		&lt;/td&gt;
+		&lt;td&gt;
+			Withers
+		&lt;/td&gt;
+		&lt;td&gt;
+			92
+		&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+
 ####Attributes (eg id, class, type)
 
 Assigning attributes (such as id or class) is easy; on a new line after a tag, just add an extra indent with the syntax attribute:value as follows:

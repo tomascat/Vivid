@@ -145,12 +145,24 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 			#skip the rest of the cycle.
 			continue
 		
-		#deal with single line tag#text
+		
 		
 		#deal with everything else:
 		
+		#deal with single line tag#text
+		if "#" in stripped_line:
+			close_tags()
+			textsplit = stripped_line.split('#')
+			tag = textsplit[0]
+			text_to_write = "#".join(textsplit[1:])
+			write_indented("<"+tag+">",0,html_to_write)
+			write_indented(text_to_write,-1,html_to_write)
+			unclosed_tags.append(tag)
+			#set the last type to be a tag
+			last_type_tag = True
+		
 		#deal with properties eg class:20
-		if ":" in stripped_line:
+		elif ":" in stripped_line:
 			#if the current tag has less whitespace than the last, close all tags up to this one
 			close_tags()
 			tagstart = html_to_write[last_tag_index()].strip()[:-1]
@@ -180,7 +192,7 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 			unclosed_tags.append(stripped_line.strip())
 			#set the last type to be a tag
 			last_type_tag = True
-			
+		
 		# For debugging purposes:
 		# a = ''.join(html_to_write)
 		# b = ','.join(unclosed_tags)
