@@ -140,18 +140,18 @@ div
 converts to:
 
 <pre>
-<div>
-	<p>Here is some <strong>Markdown</strong> for your viewing pleasure:</p>
-	<ul>
-	<li>
-	<p>A list perhaps?</p>
-	</li>
-	<li>
-	<p>I think that sounds grand!</p>
-	</li>
-	</ul>
-	<p><em>Spectacular</em>, if I do say so myself!</p>
-</div>
+&lt;div&gt;
+	&lt;p&gt;Here is some &lt;strong&gt;Markdown&lt;/strong&gt; for your viewing pleasure:&lt;/p&gt;
+	&lt;ul&gt;
+	&lt;li&gt;
+	&lt;p&gt;A list perhaps?&lt;/p&gt;
+	&lt;/li&gt;
+	&lt;li&gt;
+	&lt;p&gt;I think that sounds grand!&lt;/p&gt;
+	&lt;/li&gt;
+	&lt;/ul&gt;
+	&lt;p&gt;&lt;em&gt;Spectacular&lt;/em&gt;, if I do say so myself!&lt;/p&gt;
+&lt;/div&gt;
 </pre>
 
 Indentation not as nice but I'm working on it!
