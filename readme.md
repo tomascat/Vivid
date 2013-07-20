@@ -6,8 +6,9 @@ A simple and elegant markup language that compiles to HTML & XML (and soon JSON)
 
 - Vivid files can be created in any text editor of your choice, but at this stage should be encoded in Unicode, preferably UTF-8.
 - At the moment you need Python 2+ installed to make use of the script.
-- Simply download 'xconverter.py' and the 'markdown' directory to the directory you want to use it in.
-- Open a command-line and enter 'python xconverter.py [filename of your vivid file] [filename of the html file you want to output]'
+- Simply download 'xconverter.py' and the 'markdown' directory to the directory of your choice.
+- Open a command-line and enter 'python [path to converter]\xconverter.py [path to vivid file]\[filename of your vivid file] [path to html file]\[filename of the html file you want to output]' e.g. 'python c:\vivid\xconverter.py c:\documents\example.vivid c:\website\example.html'
+- If you don't enter the filename for the html file, it will default to the name of vivid file (e.g. example.vivid -> example.html)
 - That's it!
 
 ###Syntax - XML & HTML
@@ -29,12 +30,10 @@ will automatically nest the tags and convert to:
 <pre>
 &lt;div&gt;
 	&lt;div&gt;
-		&lt;p&gt;
-		&lt;/p&gt;
+		&lt;p&gt;&lt;/p&gt;
 	&lt;/div&gt;
 	&lt;div&gt;
-		&lt;p&gt;
-		&lt;/p&gt;
+		&lt;p&gt;&lt;/p&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
 </pre>
@@ -65,9 +64,7 @@ p
 converts to:
 
 <pre>
-&lt;p&gt;
-	Based on ideal line length 50-75 characters.
-&lt;/p&gt;
+&lt;p&gt;Based on ideal line length 50-75 characters.&lt;/p&gt;
 &lt;p&gt;
 	As you can see... blah blah blah&lt;br /&gt;
 	this is a multi-line block
@@ -101,37 +98,19 @@ will turn into:
 <pre>
 &lt;table&gt;
 	&lt;tr&gt;
-		&lt;th&gt;
-			First Name
-		&lt;/th&gt;
-		&lt;th&gt;
-			Surname
-		&lt;/th&gt;
-		&lt;th&gt;
-			Age
-		&lt;/th&gt;
+		&lt;th&gt;First Name&lt;/th&gt;
+		&lt;th&gt;Surname&lt;/th&gt;
+		&lt;th&gt;Age&lt;/th&gt;
 	&lt;/tr&gt;
 	&lt;tr&gt;
-		&lt;td&gt;
-			Adam
-		&lt;/td&gt;
-		&lt;td&gt;
-			Adamsen
-		&lt;/td&gt;
-		&lt;td&gt;
-			40
-		&lt;/td&gt;
+		&lt;td&gt;Adam&lt;/td&gt;
+		&lt;td&gt;Adamsen&lt;/td&gt;
+		&lt;td&gt;40&lt;/td&gt;
 	&lt;/tr&gt;
 	&lt;tr&gt;
-		&lt;td&gt;
-			Mavis
-		&lt;/td&gt;
-		&lt;td&gt;
-			Withers
-		&lt;/td&gt;
-		&lt;td&gt;
-			92
-		&lt;/td&gt;
+		&lt;td&gt;Mavis&lt;/td&gt;
+		&lt;td&gt;Withers&lt;/td&gt;
+		&lt;td&gt;92&lt;/td&gt;
 	&lt;/tr&gt;
 &lt;/table&gt;
 </pre>
@@ -150,8 +129,7 @@ div
 which will turn into:
 
 <pre>
-&lt;div id="kafka" class="blocktext" data-category="3"&gt;
-&lt;/div&gt;
+&lt;div id="kafka" class="blocktext" data-category="3"&gt;&lt;/div&gt;
 </pre>
 
 You can also use attributes on multiple lines by using 'attribute:', indenting the values you want to use and putting a semicolon at the end, like so:
@@ -167,8 +145,7 @@ div
 which turns into:
 
 <pre>
-&lt;div id="kafka blocktext menu"&gt;
-&lt;/div&gt;
+&lt;div id="kafka blocktext menu"&gt;&lt;/div&gt;
 </pre>
 
 ####Tags you can use
@@ -188,19 +165,18 @@ ie
 <pre>
 &lt;hello&gt;
 	&lt;these&gt;
-		&lt;are&gt;
-		&lt;/are&gt;
-		&lt;some&gt;
-		&lt;/some&gt;
+		&lt;are&gt;&lt;/are&gt;
+		&lt;some&gt;&lt;/some&gt;
 	&lt;/these&gt;
-	&lt;tags&gt;
-	&lt;/tags&gt;
+	&lt;tags&gt;&lt;/tags&gt;
 &lt;/hello&gt;
 </pre>
 
 ####Markdown
 
-<a href="http://daringfireball.net/projects/markdown/">Markdown</a> is supported (courtesy of The Python Markdown Project, see copyright/licence details below), starting and ending with '#markdown#':
+*Note*: Markdown blocks automatically get wrapped in a 'p' tag so do not need to be preceded by one (see below).
+
+&lt;a href="http://daringfireball.net/projects/markdown/"&gt;Markdown&lt;/a&gt; is supported (courtesy of The Python Markdown Project, see copyright/licence details below), starting and ending with '#markdown#':
 
 <pre>
 div
@@ -218,12 +194,8 @@ converts to:
 &lt;div&gt;
 	&lt;p&gt;Here is some &lt;strong&gt;Markdown&lt;/strong&gt; for your viewing pleasure:&lt;/p&gt;
 	&lt;ul&gt;
-	&lt;li&gt;
-	&lt;p&gt;A list perhaps?&lt;/p&gt;
-	&lt;/li&gt;
-	&lt;li&gt;
-	&lt;p&gt;I think that sounds grand!&lt;/p&gt;
-	&lt;/li&gt;
+	&lt;li&gt;&lt;p&gt;A list perhaps?&lt;/p&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;p&gt;I think that sounds grand!&lt;/p&gt;&lt;/li&gt;
 	&lt;/ul&gt;
 	&lt;p&gt;&lt;em&gt;Spectacular&lt;/em&gt;, if I do say so myself!&lt;/p&gt;
 &lt;/div&gt;
@@ -231,7 +203,7 @@ converts to:
 
 Indentation not as nice but I'm working on it!
 
-Markdown project and syntax available at <a href="http://daringfireball.net/projects/markdown/">Daring Fireball</a>
+Markdown project and syntax available at &lt;a href="http://daringfireball.net/projects/markdown/"&gt;Daring Fireball&lt;/a&gt;
 
 ####Putting it all together: a complex example
 
@@ -269,6 +241,13 @@ html
 				This is another multi line block
 				that I have created
 				##
+			#markdown#
+			Here is some **Markdown** for your viewing pleasure:
+			* A list perhaps?
+			* I think that sounds grand!
+			*Spectacular*
+			#markdown#
+			p#This works too
 		div
 			id:tester
 			h2
@@ -282,11 +261,14 @@ html
 				value:62
 			class:kafka
 			ul
-				class:fiddle
+				class:
+					fiddle
+					kafka
+					buttons;
+				li#An item
+					class:firstitem
+				li#Another item
 				li
-					#An item
-				li
-					#Another item
 </pre>
 
 converts to:
@@ -294,28 +276,18 @@ converts to:
 <pre>
 &lt;html lang="en"&gt;
 	&lt;head&gt;
-		&lt;meta charset="utf-8"&gt;
-		&lt;/meta&gt;
-		&lt;title&gt;
-			Ideal line lengths by font
-		&lt;/title&gt;
-		&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"&gt;
-		&lt;/script&gt;
-		&lt;script src="linelength.js"&gt;
-		&lt;/script&gt;
-		&lt;link rel="stylesheet" href="linelength.css"&gt;
-		&lt;/link&gt;
+		&lt;meta charset="utf-8"&gt;&lt;/meta&gt;
+		&lt;title&gt;Ideal line lengths by font&lt;/title&gt;
+		&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"&gt;&lt;/script&gt;
+		&lt;script src="linelength.js"&gt;&lt;/script&gt;
+		&lt;link rel="stylesheet" href="linelength.css"&gt;&lt;/link&gt;
 	&lt;/head&gt;
 	&lt;body&gt;
 		&lt;div id="heading"&gt;
-			&lt;h1&gt;
-				Ideal Line Lengths by Font
-			&lt;/h1&gt;
+			&lt;h1&gt;Ideal Line Lengths by Font&lt;/h1&gt;
 		&lt;/div&gt;
 		&lt;div id="intro"&gt;
-			&lt;p&gt;
-				Based on ideal line length 50-75 characters.
-			&lt;/p&gt;
+			&lt;p&gt;Based on ideal line length 50-75 characters.&lt;/p&gt;
 			&lt;p&gt;
 				As you can see... blah blah blah&lt;br /&gt;
 				this is a multi-line block
@@ -324,22 +296,23 @@ converts to:
 				This is another multi line block&lt;br /&gt;
 				that I have created
 			&lt;/p&gt;
+			&lt;p&gt;Here is some &lt;strong&gt;Markdown&lt;/strong&gt; for your viewing pleasure:&lt;/p&gt;
+			&lt;ul&gt;
+			&lt;li&gt;&lt;p&gt;A list perhaps?&lt;/p&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;p&gt;I think that sounds grand!&lt;/p&gt;&lt;/li&gt;
+			&lt;/ul&gt;
+			&lt;p&gt;&lt;em&gt;Spectacular&lt;/em&gt;&lt;/p&gt;
+			&lt;p&gt;This works too&lt;/p&gt;
 		&lt;/div&gt;
 		&lt;div id="tester" class="kafka"&gt;
-			&lt;h2&gt;
-				Test it out here:
-			&lt;/h2&gt;
-			&lt;input type="range" id="charsperline" max="75" min="50" step="1" value="62"&gt;
-			&lt;/input&gt;
-			&lt;ul class="fiddle"&gt;
-				&lt;li&gt;
-					An item
-				&lt;/li&gt;
-				&lt;li&gt;
-					Another item
-				&lt;/li&gt;
-			&lt;/ul&gt;
+			&lt;h2&gt;Test it out here:&lt;/h2&gt;
+			&lt;input type="range" id="charsperline" max="75" min="50" step="1" value="62"&gt;&lt;/input&gt;
 		&lt;/div&gt;
+		&lt;ul class="fiddle kafka buttons"&gt;
+			&lt;li class="firstitem"&gt;An item&lt;/li&gt;
+			&lt;li&gt;Another item&lt;/li&gt;
+			&lt;li&gt;&lt;/li&gt;
+		&lt;/ul&gt;
 	&lt;/body&gt;
 &lt;/html&gt;
 </pre>
@@ -388,7 +361,7 @@ modification, are permitted provided that the following conditions are met:
 *   Redistributions in binary form must reproduce the above copyright
     notice, this list of conditions and the following disclaimer in the
     documentation and/or other materials provided with the distribution.
-*   Neither the name of the <organization> nor the
+*   Neither the name of the &lt;organization&gt; nor the
     names of its contributors may be used to endorse or promote products
     derived from this software without specific prior written permission.
 

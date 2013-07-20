@@ -35,6 +35,7 @@ html
 			* I think that sounds grand!
 			*Spectacular*
 			#markdown#
+			p#This works too
 		div
 			id:tester
 			h2
@@ -46,7 +47,6 @@ html
 				min:50
 				step:1
 				value:62
-			p#Yay!
 			class:kafka
 			ul
 				class:
@@ -56,3 +56,4 @@ html
 				li#An item
 					class:firstitem
 				li#Another item
+				li

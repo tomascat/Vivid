@@ -9,6 +9,7 @@ markdown_directory = os.path.join(os.path.dirname(__file__), 'markdown')
 sys.path.append(markdown_directory)
 import markdown
 
+#Functions
 def stripped(str):
 	if tab_spaced:
 		return str.lstrip('\t').rstrip('\n\r')
@@ -22,8 +23,8 @@ def write_indented (str,i,writearray):
 	return writearray.append(indented(str,i))
 
 def close_tags():
-	if currentws <= previousws:
-		for x in xrange(1+int(round((previousws-currentws)/float(whitespacing)))):
+	if (whitespace_array[-1] <= whitespace_array[-2]) and (whitespacing>0):
+		for x in xrange(1+int(round((whitespace_array[-2]-whitespace_array[-1])/float(whitespacing)))):
 			write_indented("</"+unclosed_tags[-1]+">",1,html_to_write)
 			unclosed_tags.pop()
 
@@ -45,12 +46,17 @@ def current_ws():
 html_to_write = []
 unclosed_tags = []
 debug = []
+
 vividfilename = sys.argv[1]
-htmlfilename = sys.argv[2]
-currentws = 0
-previousws = -1
+if len(sys.argv)>2:
+	htmlfilename = sys.argv[2]
+else:
+	htmlfilename = vividfilename.split('.')[0] + '.html'
+
 whitespacing = 0
+whitespace_array = [-1,0]
 tab_spaced = False
+
 last_type_tag = False
 multi_line_text = False
 multi_line_property = False
@@ -62,11 +68,11 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 	
 	for line in vividfile:
 		#work out how many whitespaces at start
-		currentws = current_ws()
+		whitespace_array.append(current_ws())
 		
 		#For first line with whitespace, work out the whitespacing (eg tab vs 4-space)
-		if whitespacing == 0 and currentws > 0:
-			whitespacing = currentws
+		if whitespacing == 0 and whitespace_array[-1] > 0:
+			whitespacing = whitespace_array[-1]
 			if line[0] == '\t':
 				tab_spaced = True
 		
@@ -88,6 +94,7 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 				multi_line_text = False
 			else:
 				write_indented(stripped_line + "<br />",0,html_to_write)
+			whitespace_array.pop()
 			continue
 		
 		#deal with unclosed markdown
@@ -101,6 +108,7 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 				is_markdown = False
 			else:
 				markdown_array.append(stripped_line)
+			whitespace_array[-1] -= 1
 			continue
 		
 		#deal with multiline properties
@@ -112,6 +120,7 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 				multi_line_property = False
 			else:
 				html_to_write[last_tag_index()] = indented(tagstart + propertyvalue + " \">",1)
+			whitespace_array.pop()
 			continue
 		
 		#deal with text ie things starting with '#'
@@ -143,9 +152,31 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 			else:
 				write_indented(stripped_line[1:],0,html_to_write)
 			#skip the rest of the cycle.
+			whitespace_array.pop()
 			continue
 		
-		
+		#deal with properties eg class:20
+		if ":" in stripped_line:
+			#if the current tag has less whitespace than the last, close all tags up to this one
+			close_tags()
+			tagstart = html_to_write[last_tag_index()].strip()[:-1]
+			#deal with multiline properties- add 'property ="' to the last unclosed tag
+			if stripped_line.endswith(':'):
+				multi_line_property = True
+				property = stripped_line.strip()[:-1]
+				html_to_write[last_tag_index()] = indented(tagstart + " " + property + "=\" >",1)
+			else:
+				#break the property up and insert it into the last tag
+				propertysplit = stripped_line.strip().split(":")
+				property = propertysplit[0].strip()
+				propertyvalue = propertysplit[1].lstrip() + ':'.join(propertysplit[2:])
+				html_to_write[last_tag_index()] = indented(tagstart + " " + property + "=\"" + propertyvalue + "\">",1)
+				#set the last type to not be a tag
+				last_type_tag = False
+				#reduce whitespace by one as it's a property
+				# whitespace_array[-1] -= whitespacing
+			whitespace_array.pop()
+			continue
 		
 		#deal with everything else:
 		
@@ -161,28 +192,6 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 			#set the last type to be a tag
 			last_type_tag = True
 		
-		#deal with properties eg class:20
-		elif ":" in stripped_line:
-			#if the current tag has less whitespace than the last, close all tags up to this one
-			close_tags()
-			tagstart = html_to_write[last_tag_index()].strip()[:-1]
-			#deal with multiline properties- add 'property ="' to the last unclosed tag
-			if stripped_line.endswith(':'):
-				multi_line_property = True
-				property = stripped_line.strip()[:-1]
-				html_to_write[last_tag_index()] = indented(tagstart + " " + property + "=\" >",1)
-				continue
-			else:
-				#break the property up and insert it into the last tag
-				propertysplit = stripped_line.strip().split(":")
-				property = propertysplit[0].strip()
-				propertyvalue = propertysplit[1].lstrip() + ':'.join(propertysplit[2:])
-				html_to_write[last_tag_index()] = indented(tagstart + " " + property + "=\"" + propertyvalue + "\">",1)
-				#set the last type to not be a tag
-				last_type_tag = False
-				#reduce whitespace by one as it's a property
-				currentws -= whitespacing
-		
 		#deal with tags eg div
 		else:
 			#if the current tag has less whitespace than the last, close all tags up to this one
@@ -196,13 +205,23 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 		# For debugging purposes:
 		# a = ''.join(html_to_write)
 		# b = ','.join(unclosed_tags)
-		# print str(last_type_tag) + "," + str(currentws) + "," + stripped_line + "," + str(previousws) + "\n" + a + "\n" + b + "\n\n"
-		
-		previousws = currentws
+		# print '{1}, whitespace_array:{0!s}\nunclosedtags:{3}\n{2}'.format(whitespace_array,stripped_line,a,b)
 	
 	#close any unclosed tags at the end
 	for key, tag in enumerate(reversed(unclosed_tags)):
 		write_indented("</"+tag+">",key+1,html_to_write)
+
+#nicer formatting for tags with no children or only single line text
+for key, item in enumerate(html_to_write):
+	if item.lstrip().startswith('</'):
+		startendtag = "<"+stripped(item)[2:-1]
+		if stripped(html_to_write[key-1]).startswith(startendtag):
+			html_to_write[key-1] = html_to_write[key-1].rstrip()
+			html_to_write[key] = html_to_write[key].lstrip()
+		if stripped(html_to_write[key-2]).startswith(startendtag):
+			html_to_write[key-2] = html_to_write[key-2].rstrip()
+			html_to_write[key-1] = stripped(html_to_write[key-1])
+			html_to_write[key] = html_to_write[key].lstrip()
 
 s = ''.join(html_to_write)
 
