@@ -176,7 +176,7 @@ ie
 
 *Note*: Markdown blocks automatically get wrapped in a 'p' tag so do not need to be preceded by one (see below).
 
-&lt;a href="http://daringfireball.net/projects/markdown/"&gt;Markdown&lt;/a&gt; is supported (courtesy of The Python Markdown Project, see copyright/licence details below), starting and ending with '#markdown#':
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a> is supported (courtesy of The Python Markdown Project, see copyright/licence details below), starting and ending with '#markdown#':
 
 <pre>
 div
@@ -203,7 +203,7 @@ converts to:
 
 Indentation not as nice but I'm working on it!
 
-Markdown project and syntax available at &lt;a href="http://daringfireball.net/projects/markdown/"&gt;Daring Fireball&lt;/a&gt;
+Markdown project and syntax available at <a href="http://daringfireball.net/projects/markdown/">Daring Fireball</a>
 
 ####Putting it all together: a complex example
 
