@@ -1,0 +1,30 @@
+fruits
+	apples
+		types
+			red delicious
+			golden delicious
+			granny smith
+		colours
+			red
+			yellow
+			green
+		price
+			1
+	cucumbers
+		types
+			lebanese
+			continental
+		colours
+			green
+		price
+			2.4
+	oranges
+		types
+			valencia
+			blood
+			seville
+		colours
+			orange
+		price
+			1.2
+			2.4

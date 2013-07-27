@@ -1,0 +1,37 @@
+{
+    "fruits": {
+        "oranges": {
+            "colours": "orange", 
+            "price": [
+                "1.2", 
+                "2.4"
+            ], 
+            "types": [
+                "valencia", 
+                "blood", 
+                "seville"
+            ]
+        }, 
+        "apples": {
+            "colours": [
+                "red", 
+                "yellow", 
+                "green"
+            ], 
+            "price": "1", 
+            "types": [
+                "red delicious", 
+                "golden delicious", 
+                "granny smith"
+            ]
+        }, 
+        "cucumbers": {
+            "colours": "green", 
+            "price": "2.4", 
+            "types": [
+                "lebanese", 
+                "continental"
+            ]
+        }
+    }
+}
