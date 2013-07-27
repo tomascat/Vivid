@@ -201,11 +201,6 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 			unclosed_tags.append(stripped_line.strip())
 			#set the last type to be a tag
 			last_type_tag = True
-		
-		# For debugging purposes:
-		# a = ''.join(html_to_write)
-		# b = ','.join(unclosed_tags)
-		# print '{1}, whitespace_array:{0!s}\nunclosedtags:{3}\n{2}'.format(whitespace_array,stripped_line,a,b)
 	
 	#close any unclosed tags at the end
 	for key, tag in enumerate(reversed(unclosed_tags)):

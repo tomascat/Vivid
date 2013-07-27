@@ -82,11 +82,22 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 		#strip out whitespace at start and end
 		stripped_line = stripped(line)
 		
-		#deal with property names (called tags here)
 		close_tags()
-		
 		fix_children()
 		
+		#deal with single line properties
+		if ":" in stripped_line:
+			propertysplit = stripped_line.strip().split(":")
+			property = propertysplit[0].strip()
+			propertyvalue = propertysplit[1].lstrip() + ':'.join(propertysplit[2:])
+			json_to_write.append(quoted(property) + ": {")
+			json_to_write.append(quoted(propertyvalue) + ": {")
+			unclosed_tags.append(property)
+			unclosed_tags.append(propertyvalue)
+			whitespace_array.append(whitespace_array[-1]+1)
+			continue
+		
+		#deal with property names (called tags here)
 		json_to_write.append(quoted(stripped_line.strip())+": {")
 		unclosed_tags.append(stripped_line)
 		
@@ -107,6 +118,7 @@ with codecs.open(vividfilename,'rU', "utf-8-sig") as vividfile:
 
 primary = ''.join(json_to_write)
 print primary
+print primary[340:350]
 intermediate = json.loads(primary)
 secondary = json.dumps(intermediate,indent=4)
 
